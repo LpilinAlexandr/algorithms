@@ -1,29 +1,38 @@
+"""
+Ближайший ноль
 
-array = [0, 7, 9, 4, 8, 20, 2]
-array_length = len(array)
-result = [array_length - 1] * array_length
+Временная сложность O(N)
+Пространственная сложность O(N)
+"""
+import sys
 
+array_length = int(input())  # 5
+array: list[str] = sys.stdin.readline().rstrip().split()  # [0, 1, 2, 3, 4]
 
-def go(parent_array: list, result_array: list, invert: bool = False):
-    zero_index = len(parent_array) - 1 if not invert else 0
+zero_index = array_length - 1
+back_index = -1
 
-    iterator = range(len(parent_array)) if not invert else range(len(parent_array) - 1, -1, -1)
+# Проходим по массиву только 1 раз слева направо
+for i in range(array_length):
 
-    for i in iterator:
-
-        if parent_array[i] == 0:
-            zero_index = i
-            result_array[i] = 0
-            continue
-
+    if array[i] != '0':
+        # Если элемент не 0, то вычисляем дельту между его индексом и индексом прошлого нуля
         delta = abs(i - zero_index)
-        if result_array[i] > delta:
-            result_array[i] = delta
+        array[i] = str(delta)
+        continue
 
-    return result_array
+    # Если элемент -- это 0, то нужно обновить значения элементов, что слева от нового нуля.
+    # Для этого итерируемся в обратную сторону: Стартуем от предыдущего элемента (i - 1) и движемся обратно до тех пор,
+    # пока не дойдём до элемента более ближнего к прошлому нулю, чем к новому. Либо пока не упрёмся в начало массива.
+    for j in range(i - 1, back_index, -1):
+        delta = abs(j - i)
+        if int(array[j]) > delta:
+            array[j] = str(delta)
+        else:
+            # Здесь мы находим либо первый элемент массива, либо более ближний элемент к левому нулю,
+            # по этому завершаем цикл
+            break
 
+    zero_index = back_index = i
 
-result = go(array, result_array=result)
-result = go(result, result_array=result, invert=True)
-
-print(' '.join(str(i) for i in result))
+print(' '.join(i for i in array))
