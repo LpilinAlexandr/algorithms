@@ -1,6 +1,6 @@
 """
 -- ПРИНЦИП РАБОТЫ --
-Ссылка на прохождение в contest: https://contest.yandex.ru/contest/22781/run-report/85450595/
+Ссылка на прохождение в contest: https://contest.yandex.ru/contest/22781/run-report/85461183/
 
 Я реализовал Дек с использованием кольцевого буфера:
 При инициализации Дека внутри задаётся массив фиксированной длины.
@@ -110,20 +110,20 @@ class Deque:
             raise IndexError('Кол-во элементов в Deque достигло максимума')
 
         if self.queue[self.tail] is not self.__EMPTY:
-            self.tail = (self.tail + 1) % len(self.queue)
+            self.tail = (self.tail + 1) % self.max_size
 
         self.queue[self.tail] = item
         self.size += 1
 
     def pop_back(self):
         item = self.queue[self.tail]
-        if item is SpecialEmpty:
+        if item is self.__EMPTY:
             raise IndexError('Deque пуст')
 
         self.queue[self.tail] = self.__EMPTY
         self.size -= 1
         if self.size:
-            self.tail = (self.tail - 1) % len(self.queue)
+            self.tail = (self.tail - 1) % self.max_size
 
         return item
 
@@ -133,7 +133,7 @@ class Deque:
             raise IndexError('Кол-во элементов в Deque достигло максимума')
 
         if self.queue[self.head] is not self.__EMPTY:
-            self.head = (self.head - 1) % len(self.queue)
+            self.head = (self.head - 1) % self.max_size
 
         self.queue[self.head] = item
         self.size += 1
@@ -146,7 +146,7 @@ class Deque:
         self.queue[self.head] = self.__EMPTY
         self.size -= 1
         if self.size:
-            self.head = (self.head + 1) % len(self.queue)
+            self.head = (self.head + 1) % self.max_size
 
         return item
 
