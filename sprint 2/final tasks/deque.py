@@ -72,10 +72,6 @@ deque = [SpecialEmpty, SpecialEmpty, SpecialEmpty, SpecialEmpty, SpecialEmpty]
 -- ПРОСТРАНСТВЕННАЯ СЛОЖНОСТЬ --
 Размер Дека константен и равен его максимальному размеру. Таким образом если максимальный размер равен N,
 то потребление памяти будет O(N).
-
-В теории можно было бы динамически увеличивать размер массива в 2 раза от текущего каждый раз,
-когда в массиве не осталось пустых мест, но его размер ещё не максимален. Тогда потребление памяти уменьшилось бы до
-O(n log n), но в таком временная сложность в худшем случае была бы O(N), а так она каждый раз O(1)
 """
 import sys
 
@@ -151,7 +147,8 @@ class Deque:
         return item
 
 
-if __name__ == '__main__':
+def main():
+    """Основная функция с реализацией проверки структуры данных Deque."""
     commands_count = int(input())
     deque = Deque(int(input()))
 
@@ -162,3 +159,7 @@ if __name__ == '__main__':
             print(getattr(deque, command)()) if not arg else getattr(deque, command)(int(arg[0]))
         except IndexError:
             print('error')
+
+
+if __name__ == '__main__':
+    main()

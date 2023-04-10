@@ -24,10 +24,9 @@
 """
 
 
-if __name__ == '__main__':
+def main():
+    """Основная функция с реализацией алгоритма."""
     array = input().split()
-
-    result = None
     stack = []
 
     for sign in array:
@@ -49,3 +48,7 @@ if __name__ == '__main__':
     result = stack.pop()
 
     print(result)
+
+
+if __name__ == '__main__':
+    main()
